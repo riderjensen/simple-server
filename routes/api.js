@@ -1,8 +1,7 @@
 const express = require('express');
+const router = express.Router();
 
 const apiRouter = require('../controllers/api');
-
-const router = express.Router();
 
 router.get('/', apiRouter.sendApiData);
 
