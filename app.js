@@ -1,7 +1,13 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const apiRoute = require('./routes/api');
 
 const app = express();
-const apiRoute = require('./routes/api');
+
+app.use(bodyParser.urlencoded({
+	extended: false,
+	useNewUrlParser: true
+}));
 
 app.use('/api', apiRoute)
 
