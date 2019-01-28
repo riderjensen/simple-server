@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const apiRoute = require('./routes/api');
+const mongoose = require('mongoose');
+
+const editRoute = require('./routes/edit.route');
+const instRoute = require('./routes/inst.route');
+const itemModel = require('./models/item.model');
 
 const app = express();
 
@@ -9,11 +13,24 @@ app.use(bodyParser.urlencoded({
 	useNewUrlParser: true
 }));
 
-app.use('/api', apiRoute)
+app.use('/edit', editRoute);
+
+app.use('/instructions', instRoute);
 
 app.get('/', (req, res, next) => {
-	res.send('<h1>HULLO??? Get the heckin heck off my server!</h1');
+	// send three different items each time
+	itemModel.find().then(response => {
+		res.send(response);
+	})
+
+
 });
 
 
-app.listen(5000);
+mongoose.connect('mongodb+srv://test-user:12345678Ah@nodecourse-zfafv.mongodb.net/store?retryWrites=true', {
+		useNewUrlParser: true
+	})
+	.then(result => {
+		app.listen(5000);
+	})
+	.catch(err => console.log(err));
