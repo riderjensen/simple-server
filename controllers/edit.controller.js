@@ -1,10 +1,9 @@
 const itemModel = require('../models/item.model');
 
 exports.doEdit = (req, res, next) => {
-
-	// show all products with an edit button
-	itemModel.find().then(response => {
-		res.send(response);
+	const theId = req.params.id;
+	itemModel.findById(theId).then(response => {
+		res.status(200).send(response);
 	})
 }
 
@@ -25,7 +24,7 @@ exports.editOne = (req, res, next) => {
 		name: newTitle,
 		price: newPrice
 	}).then(item => {
-		res.send(item);
+		res.status(201).send(item);
 	})
 
 }
@@ -35,10 +34,11 @@ exports.deleteOne = (req, res, next) => {
 	const theId = req.params.id;
 	itemModel.findByIdAndDelete(theId).then(response => {
 		if (!response) {
-			//error
-			return
+			return res.status(500).send({
+				message: 'Error in deleting'
+			});
 		}
-		res.send(response);
+		res.status(200).send(response);
 	});
 
 }
@@ -52,6 +52,11 @@ exports.createOne = (req, res, next) => {
 		price: price
 	});
 	myNewItem.save().then(response => {
-		res.send(response);
+		if (!response) {
+			return res.status(500).send({
+				message: 'Error in deleting'
+			});
+		}
+		res.status(201).send(response);
 	});
 }
