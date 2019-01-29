@@ -18,12 +18,9 @@ app.use('/edit', editRoute);
 app.use('/instructions', instRoute);
 
 app.get('/', (req, res, next) => {
-	// send three different items each time
 	itemModel.find().then(response => {
-		res.send(response);
+		res.status(200).send(response);
 	})
-
-
 });
 
 
