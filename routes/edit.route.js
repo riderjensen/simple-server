@@ -3,7 +3,7 @@ const router = express.Router();
 
 const editRouter = require('../controllers/edit.controller');
 
-router.get('/', editRouter.doEdit);
+router.get('/:id', editRouter.doEdit);
 
 router.put('/update/:id', editRouter.editOne);
 
