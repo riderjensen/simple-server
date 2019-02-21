@@ -19,8 +19,7 @@ exports.editOne = (req, res, next) => {
 			message: 'Please check your data and make sure you are sending title and price in the body'
 		});
 	}
-
-	itemModel.findOneAndUpdate(theId, {
+	itemModel.findByIdAndUpdate(theId, {
 		name: newTitle,
 		price: newPrice
 	}).then(item => {
